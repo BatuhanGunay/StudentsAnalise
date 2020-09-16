@@ -1,0 +1,407 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+ class DersKayit{
+	class kayit{
+		
+	    String name,surname,number,vize,finaln;
+	}
+	class hesaplama{
+		double basarinotu;
+		String harfnotu;
+		
+	}
+	class Raporlama{
+		
+	}
+ }
+
+public class kayitolustur {
+
+	public kayitolustur() {
+		// TODO Auto-generated constructor stub
+	}
+	 
+	public static void main(String[] args) {
+		DersKayit d1 = new DersKayit();
+		DersKayit.kayit u1=d1.new kayit();
+		DersKayit.hesaplama h1 = d1.new hesaplama();
+		
+		System.out.println("1)Kayıt işlemleri , 2)Hesaplama işlemleri , 3)Raporlama İşlemi , 4)Çıktı İşlemleri ");
+		Scanner scan = new Scanner(System.in);
+		
+		int secim = scan.nextInt();
+		switch(secim) {
+		
+		case 1:
+			Scanner scannumber = new Scanner(System.in);
+			System.out.println("Öğrenci numarasını giriniz");
+			u1.number = scannumber.nextLine();
+			
+			
+			Scanner scanname = new Scanner(System.in);
+			System.out.println("Öğrenci adı  giriniz");
+			u1.name = scanname.nextLine();
+			
+			
+			Scanner scansurname = new Scanner(System.in);
+			System.out.println("Öğrenci soyadı  giriniz");
+			u1.surname = scansurname.nextLine();
+			
+			Scanner scanvize = new Scanner(System.in);
+			System.out.println("Öğrenci Vize notunu giriniz");
+			u1.vize = scanvize.nextLine();
+			
+			Scanner scanfinal = new Scanner(System.in);
+			System.out.println("Öğrenci final notunu giriniz");
+			u1.finaln = scanfinal.nextLine();
+			
+			
+			try {
+				File f = new File("C:\\Users\\asus\\Desktop\\vize\\BM201Kayit.txt");
+				FileWriter filewriter = new  FileWriter(f,true);
+				
+				filewriter.write(u1.number+"-"+u1.name+"-"+u1.surname+"-"+u1.vize+"-"+u1.finaln+"-"+"\n");
+				filewriter.close();
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		
+			
+			
+		
+			
+			
+			break;
+		case 2:
+			
+			FileReader fr;
+			try {
+				File f = new File("C:\\Users\\asus\\Desktop\\vize\\BM201Hesap.txt");
+				fr = new FileReader("C:\\Users\\asus\\Desktop\\vize\\BM201Kayit.txt");
+				BufferedReader br = new BufferedReader(fr);
+				
+				String str;
+				
+				
+				int vize = 0;
+				int fnl = 0;
+				String vize2;
+				String fnl2;
+				int notort = 0;
+				
+				String ogrno;
+				String name;
+				String surname;
+				
+				
+				 str = br.readLine();
+				 while(str !=null) {
+					
+				String[] parts = str.split("-");
+				 String p1 = parts[0]; // 004
+				 String p2 = parts[1];
+				 String p3 = parts[2];
+				 String p4 = parts[3];
+				 String p5 = parts[4];
+				 
+				 ogrno = p1;
+				 name = p2;
+				 surname = p3;
+				 vize2 = p4;
+				 fnl2 = p5;
+				 
+				 
+				
+				   vize = Integer.valueOf(vize2);
+				   fnl = Integer.valueOf(fnl2);
+				   String harfnotu = null;
+					
+					int basarinotu = (int) (vize*0.40+fnl*0.60);
+					if(basarinotu<=100 && basarinotu>75) {
+						harfnotu = "A";		
+						
+					}
+					else if(basarinotu<=75 && basarinotu>50) {
+						harfnotu="B";
+						
+					}
+					else if(basarinotu<=50 && basarinotu>25) {
+						harfnotu="C";
+						
+					}
+					else if(basarinotu<=25 && basarinotu>0) {
+						harfnotu="D";
+						
+					}
+				System.out.println(p1+" "+p2+" "+p3+" "+p4+" "+p5+" "+basarinotu+" "+harfnotu);
+				
+				FileWriter filewriter = new  FileWriter(f,true);
+				
+				filewriter.write(ogrno+"-"+name+"-"+surname+"-"+vize2+"-"+fnl2+"-"+basarinotu+"-"+harfnotu+"\n");
+				filewriter.close();
+				 
+				
+				
+				str = br.readLine();
+				 }
+				 
+				 
+			} catch (FileNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		
+		
+			
+		case 3:
+			
+			try {
+				File r = new File("C:\\Users\\asus\\Desktop\\vize\\BM201Rapor.txt");
+				FileReader fe = new FileReader("C:\\Users\\asus\\Desktop\\vize\\BM201Hesap.txt");
+				BufferedReader be = new BufferedReader(fe);
+				String str2;
+				 int lineNumber = 0;
+				 int vizeort = 0;
+				 int finalort = 0;
+				 Float basort=(float) 0.0;
+				
+				 
+				
+			 str2 = be.readLine();
+			 while(str2 !=null) {
+				 if(str2.length()>0){
+		               lineNumber++;
+				 }
+				 
+				 
+				 
+
+					 String[] parts = str2.split("-");
+					 String part1 = parts[0]; // 004
+					 String part2 = parts[1];
+					 String part3 = parts[2];
+					 String part4 = parts[3];
+					 String part5 = parts[4];
+					 String part6 = parts[5];
+					 String part7 = parts[6];
+					
+				 
+				 
+				 int vizetoplam = Integer.valueOf(part4);
+				 int finaltoplam = Integer.valueOf(part5);
+				 Float bastoplam = Float.valueOf(part6);
+				 
+				 vizeort = vizeort+ vizetoplam;
+				 finalort = finalort+finaltoplam;
+				 basort = basort+bastoplam;
+ 
+				 
+				 FileWriter wr = new  FileWriter(r,true);
+					
+					wr.write(part1+"-"+part2+"-"+part3+"-"+part4+"-"+part5+"-"+part6+"-"+
+					part7+"\n");
+					System.out.println(part1+"-"+part2+"-"+part3+"-"+part4+"-"+part5+"-"+part6+"-"+
+							part7);
+					wr.close();
+					
+					
+				 
+				 str2 = be.readLine();
+				
+				 
+			 }
+			 
+			 
+			 be.close();
+			 
+			 vizeort= vizeort/lineNumber;
+			 System.out.println("Vize ortalama: "+vizeort);
+			 finalort = finalort/lineNumber;
+			 System.out.println("Final ortalama: "+finalort);
+			 basort = basort/lineNumber ;
+			 System.out.println("Başarı ortalama: "+basort);
+			 
+			
+			 
+			 System.out.println("Verilen Dökümandaki Öğrenci Sayısı: "+lineNumber);
+			 
+			 FileWriter filewriter = new  FileWriter(r,true);
+				
+				filewriter.write("Vize ort:"+vizeort+"\n");
+				filewriter.write("Final ort:"+finalort+"\n");
+				filewriter.write("başarıort:"+basort+"\n");
+								
+				
+				
+				filewriter.close();
+			 
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			break;
+			
+		case 4:
+			try {
+				File r = new File("C:\\Users\\asus\\Desktop\\vize\\BM201Cikti.txt");
+				FileReader fe = new FileReader("C:\\Users\\asus\\Desktop\\vize\\BM201Hesap.txt");
+				BufferedReader be = new BufferedReader(fe);
+				String str2;
+				 int lineNumber = 0;
+				 int vizeort = 0;
+				 int finalort = 0;
+				 Float basort=(float) 0.0;
+				 int a = 0,b=0, c=0, d= 0;
+				 
+				
+			 str2 = be.readLine();
+			 while(str2 !=null) {
+				 if(str2.length()>0){
+		               lineNumber++;
+				 }
+				 
+				 
+				 
+
+					 String[] parts = str2.split("-");
+					 String part1 = parts[0]; // 004
+					 String part2 = parts[1];
+					 String part3 = parts[2];
+					 String part4 = parts[3];
+					 String part5 = parts[4];
+					 String part6 = parts[5];
+					 String part7 = parts[6];
+						
+						 for (int i=0; i < part7.length(); i++)
+						    {    if(part7.charAt(i) == 'A')
+						   	 a++;
+						    }
+							 
+							
+						    for (int i=0; i < part7.length(); i++)
+						    {    if(part7.charAt(i) == 'B')
+						   	 b++;
+						    }
+							 
+							 for (int i=0; i < part7.length(); i++)
+						    {    if(part7.charAt(i) == 'C')
+						   	 c++;
+						    }
+							 for (int i=0; i < part7.length(); i++)
+						     {    if(part7.charAt(i) == 'D')
+						 	 d++;
+							
+					           }
+						
+				 
+				 
+				 int vizetoplam = Integer.valueOf(part4);
+				 int finaltoplam = Integer.valueOf(part5);
+				 Float bastoplam = Float.valueOf(part6);
+				 
+				 vizeort = vizeort+ vizetoplam;
+				 finalort = finalort+finaltoplam;
+				 basort = basort+bastoplam;
+ 
+				 
+				 FileWriter wr = new  FileWriter(r,true);
+					
+					wr.write(part1+"-"+part2+"-"+part3+"-"+part4+"-"+part5+"-"+part6+"-"+
+					part7+"\n");
+					System.out.println(part1+"-"+part2+"-"+part3+"-"+part4+"-"+part5+"-"+part6+"-"+
+							part7);
+					wr.close();
+					
+					
+				 
+				 str2 = be.readLine();
+				
+				 
+			 }
+			 
+			 
+			 be.close();
+			 
+			 vizeort= vizeort/lineNumber;
+			 System.out.println("Vize ortalama: "+vizeort);
+			 finalort = finalort/lineNumber;
+			 System.out.println("Final ortalama: "+finalort);
+			 basort = basort/lineNumber ;
+			 System.out.println("Başarı ortalama: "+basort);
+			 
+			 System.out.println("Frekans Grafiği=  A="+a+" B="+b+" C="+c+" D="+d);
+			 
+			 System.out.println("Verilen Dökümandaki Öğrenci Sayısı: "+lineNumber);
+			 
+			 FileWriter filewriter = new  FileWriter(r,true);
+				
+				filewriter.write("Vize ort:"+vizeort+"\n");
+				filewriter.write("Final ort:"+finalort+"\n");
+				filewriter.write("başarıort:"+basort+"\n");
+				filewriter.write("Frekans Grafiği=  A="+a+" B="+b+" C="+c+" D="+d);
+				
+								
+				
+				
+				filewriter.close();
+			 
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			
+			break;
+		}
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	
+	}
+
+}
